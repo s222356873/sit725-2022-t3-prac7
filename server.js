@@ -11,7 +11,7 @@ app.use(cors());
 
 //mongodb connection
  const MongoClient = require('mongodb').MongoClient;
- const url = 'mongodb+srv://s222356873:Chrysdan@sam123@cluster0.n9qtzqx.mongodb.net/?retryWrites=true&w=majority'
+ const url = 'mongodb+srv://admin:admin@cluster0.rlc2qbp.mongodb.net/sit725'
  const client= new MongoClient(url,{useNewUrlParser: true})
 
  //project collection
@@ -19,7 +19,7 @@ app.use(cors());
 
  const createCollection = (collectionName) =>{
   client.connect((err,db) => {
-    projectCollection = client.db().collection(CollectionName);
+    projectCollection = client.db().collection(collectionName);
     if(!err){
       console.log('MongoDb Connected')
     }
@@ -48,36 +48,24 @@ app.use(cors());
   })
  })
 
-//const cardList = [
-  //  {
-    //    title: "Kitten 2",
-      //  image: "images/kitten1.jfif",
-       // link: "About Kitten 2",
-        //desciption: "Demo desciption about kitten 2"
-    //},
-   // {
-     //   title: "Kitten 3",
-       // image: "images/kitten2.jpg",
-        //link: "About Kitten 3",
-        //desciption: "Demo desciption about kitten 3"
-   // }
-//]
-
+const getProjects =(callback) => {
+  projectCollection.find({}).toArray(callback)
+}
 app.get('/api/projects',(req,res) => {
-      getProjects((err,result) => {
-          if(err) {
-              res.json({statusCode: 400, message: err})
-          }
-          else {
-              res.json({statusCode: 200, message:"Success", data: result})
-          }
-      })
+   getProjects((err,result) => {
+   if(err) {
+   res.json({statusCode: 400, message: err})
+   }
+   else {
+  res.json({statusCode: 200, message:"Success", data: result})
+   }
+  })
   })
   
 
 var port = process.env.port || 3000;
 
 app.listen(port,()=>{
-    console.log("App listening to: "+port)
+ console.log("App listening to: "+port)
     createCollection('Pets')
 })
