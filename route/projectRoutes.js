@@ -1,7 +1,8 @@
 var express = require('express')
 var router = express.Router();
-let client = require("../dbConnect")
+//let client = require("../dbConnect")
 let projectCollection;
+let controller  = require("../controller")
 
 // setTimeout(() =>{
 //    projectCollection = client.mongoClient.db().collection("Project")
@@ -14,7 +15,7 @@ let projectCollection;
   
    //post api..
    router.post('/',(req,res)=>{
-    projectCollection
+    controller.projectController.createProjects(req,res)
     // console.log("New Project added",req.body)
     // var newProject = req.body;
     // insertProjects(newProject,(err,result)=>{
@@ -31,6 +32,7 @@ let projectCollection;
   //   projectCollection.find({}).toArray(callback)
   // }
   router.get('/',(req,res) => {
+    controller.projectController.retrieveProjects(req.res)
   //    getProjects((err,result) => {
   //    if(err) {
   //    res.json({statusCode: 400, message: err})

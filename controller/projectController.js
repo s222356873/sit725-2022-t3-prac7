@@ -1,23 +1,24 @@
-let client = require("../dbConnect")
-let projectCollection;
+let projectModel = require("../model/project")
+// let client = require("../dbConnect")
+// let projectCollection;
 
-setTimeout(() =>{
-    projectCollection = client.mongoClient.db().collection("Project")
-    },2000)
+// setTimeout(() =>{
+//     projectCollection = client.mongoClient.db().collection("Project")
+//     },2000)
  
- //insert project..
- const insertProjects=(project,callback) =>{
-     projectCollection.insert(project,callback);
-    }
-//get project..
-const getProjects =(callback) => {
-    projectCollection.find({}).toArray(callback)
-      }
+//  //insert project..
+//  const insertProjects=(project,callback) =>{
+//      projectCollection.insert(project,callback);
+//     }
+// //get project..
+// const getProjects =(callback) => {
+//     projectCollection.find({}).toArray(callback)
+//       }
 //create project..
 const createProject = (req,res) =>{
     console.log("New Project added",req.body)
     var newProject = req.body;
-    insertProjects(newProject,(err,result)=>{
+    projectModel.insertProjects(newProject,(err,result)=>{
       if(err){
         res.json({statusCode:400,message:err})
       }
@@ -29,7 +30,7 @@ const createProject = (req,res) =>{
 }
 //Retrieve project
 const retrieveProject = (req,res) =>{
-getProjects((err,result) => {
+projectModel.getProjects((err,result) => {
     if(err) {
     res.json({statusCode: 400, message: err})
     }
