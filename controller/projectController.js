@@ -1,42 +1,31 @@
-let projectModel = require("../model/project")
-// let client = require("../dbConnect")
-// let projectCollection;
+let projectModel = require("../models/project.js");
 
-// setTimeout(() =>{
-//     projectCollection = client.mongoClient.db().collection("Project")
-//     },2000)
- 
-//  //insert project..
-//  const insertProjects=(project,callback) =>{
-//      projectCollection.insert(project,callback);
-//     }
-// //get project..
-// const getProjects =(callback) => {
-//     projectCollection.find({}).toArray(callback)
-//       }
-//create project..
-const createProject = (req,res) =>{
-    console.log("New Project added",req.body)
-    var newProject = req.body;
-    projectModel.insertProjects(newProject,(err,result)=>{
-      if(err){
-        res.json({statusCode:400,message:err})
-      }
-      else{
-        res.json({statusCode:200,message:"Project Successfully added", data:result})
-      }
-    
-   })
-}
-//Retrieve project
-const retrieveProject = (req,res) =>{
-projectModel.getProjects((err,result) => {
-    if(err) {
-    res.json({statusCode: 400, message: err})
+//create project
+const createProjects = (req, res) => {
+  console.log("New Project Added", req.body);
+  var newProject = req.body;
+  projectModel.insertProjects(newProject, (err, result) => {
+    if (err) {
+      res.json({ ststusCode: 400, message: err });
+    } else {
+      res.json({
+        statusCode: 200,
+        message: "Project successfully added",
+        data: result,
+      });
     }
-    else {
-   res.json({statusCode: 200, message:"Success", data: result})
+  });
+};
+
+//retrieve project
+const retrieveProjects = (req, res) => {
+  projectModel.getProjects((err, result) => {
+    if (err) {
+      res.json({ ststusCode: 400, message: err });
+    } else {
+      res.json({ statusCode: 200, message: "Success", data: result });
     }
-   })
-   }
-   module.export =(retrieveProject,createProject)
+  });
+};
+
+module.exports = { retrieveProjects, createProjects };
